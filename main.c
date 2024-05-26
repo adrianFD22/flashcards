@@ -188,25 +188,27 @@ int main(int argc, char **argv)
     endwin();
 }
 
-// Generates a list of random distinct integers using brute
-// force (shitty algorithm for big numbers)
+// Generates a list of random distinct integers using
+// reservoir shuffle
 int *gen_session_indices(int len, int num_lines)
 {
-    int *session_indices, *used_indices;
+    int *session_indices, *available_indices;
     int rand_index;
 
-    used_indices = (int*) calloc(num_lines, sizeof(int));
     session_indices = (int*) malloc(len * sizeof(int));
+
+    available_indices = (int*) malloc(num_lines * sizeof(int));
+
+    for (int i=0; i < num_lines; i++) {
+        available_indices[i] = i;
+    }
 
     for (int i=0; i < len; i++)
     {
-        do
-        {
-            rand_index = rand() % num_lines;
-        } while (used_indices[rand_index]);
+        rand_index = rand() % (num_lines - i);
 
-        session_indices[i] = rand_index;
-        used_indices[rand_index] = 1;
+        session_indices[i] = available_indices[rand_index];
+        available_indices[rand_index] = available_indices[num_lines - i - 1];
     }
 
     return session_indices;

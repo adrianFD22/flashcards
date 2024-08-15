@@ -13,7 +13,11 @@
 #include <locale.h>
 #include <unistd.h>
 
-#include "config.h"
+//#include "config.h"
+
+#define DEFAULT_SESSION_LEN 30      // Default number of words in session
+#define SEP_TOKEN ","               // Separation token for reading csv
+#define WAIT_TIME 700               // Time in miliseconds to show the correct message
 
 #define STR_LEN 100
 #define MIN(x,y) (x) < (y) ? (x) : (y)
@@ -81,8 +85,8 @@ int main(int argc, char **argv)
     }
 
     file_name = argv[1];
-    file_name = strcat(file_name, ".csv");
-    file_name = strcat(flashcards_path, file_name);
+    //file_name = strcat(file_name, ".csv");
+    //file_name = strcat(flashcards_path, file_name);
 
     // -------------------------
     //      Read flashcards

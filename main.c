@@ -267,6 +267,10 @@ void getstr_centered(int center_y, int center_x, char *str)
         {
             if (len > 0)
             {
+                if (len > 1 && str[len-1] < 0) {    // If char to delete is extended ascii (and therefore 2 bytes), remove two
+                    len--;
+                }
+
                 len--;
                 *(str+len) = '\0';
             }
